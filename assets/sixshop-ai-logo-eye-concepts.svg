@@ -1,0 +1,143 @@
+<svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="softShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="20" stdDeviation="22" flood-color="#5F4CEB" flood-opacity="0.16"/>
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#2B206F" flood-opacity="0.08"/>
+    </filter>
+
+    <filter id="eyeGlow" x="-120%" y="-120%" width="340%" height="340%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <radialGradient id="circleGel" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(132 86) rotate(125) scale(118)">
+      <stop stop-color="#F0E9FF"/>
+      <stop offset="0.42" stop-color="#A996FF"/>
+      <stop offset="0.76" stop-color="#8370F5"/>
+      <stop offset="1" stop-color="#6E61D7"/>
+    </radialGradient>
+
+    <linearGradient id="barGel" x1="80" y1="34" x2="122" y2="134" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8478EF"/>
+      <stop offset="0.52" stop-color="#5E53D7"/>
+      <stop offset="1" stop-color="#3F36A8"/>
+    </linearGradient>
+
+    <radialGradient id="circleSoft" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(146 82) rotate(132) scale(126)">
+      <stop stop-color="#F7F1FF"/>
+      <stop offset="0.55" stop-color="#BBAEFF"/>
+      <stop offset="1" stop-color="#7C6CE8"/>
+    </radialGradient>
+
+    <linearGradient id="barSoft" x1="80" y1="34" x2="124" y2="140" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8D82F4"/>
+      <stop offset="1" stop-color="#5548C7"/>
+    </linearGradient>
+
+    <radialGradient id="circleFlat" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(126 88) rotate(123) scale(112)">
+      <stop stop-color="#CAC1FF"/>
+      <stop offset="1" stop-color="#7566E4"/>
+    </radialGradient>
+
+    <linearGradient id="barFlat" x1="82" y1="34" x2="124" y2="140" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#756DE4"/>
+      <stop offset="1" stop-color="#5E54D6"/>
+    </linearGradient>
+
+    <radialGradient id="overlapShade" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(103 100) rotate(111) scale(67)">
+      <stop stop-color="#222C74" stop-opacity="0.92"/>
+      <stop offset="0.76" stop-color="#1C2768" stop-opacity="0.72"/>
+      <stop offset="1" stop-color="#1C2768" stop-opacity="0"/>
+    </radialGradient>
+
+    <clipPath id="circleClip">
+      <circle cx="128" cy="112" r="64"/>
+    </clipPath>
+
+    <clipPath id="markClip">
+      <path d="M72 40H120V128H72V40Z"/>
+      <circle cx="128" cy="112" r="64"/>
+    </clipPath>
+
+    <g id="mark-base-soft">
+      <g filter="url(#softShadow)">
+        <circle cx="128" cy="112" r="64" fill="url(#circleSoft)"/>
+        <rect x="72" y="40" width="48" height="88" rx="0" fill="url(#barSoft)"/>
+        <g clip-path="url(#circleClip)">
+          <rect x="72" y="40" width="48" height="88" rx="0" fill="#20296B" fill-opacity="0.72"/>
+          <rect x="72" y="40" width="48" height="88" rx="0" fill="url(#overlapShade)"/>
+        </g>
+      </g>
+      <path d="M88 42H118" stroke="white" stroke-opacity="0.22" stroke-width="2" stroke-linecap="round"/>
+      <path d="M93 177C119 185 157 176 179 146" stroke="white" stroke-opacity="0.18" stroke-width="5" stroke-linecap="round"/>
+    </g>
+
+    <g id="mark-base-gel">
+      <g filter="url(#softShadow)">
+        <circle cx="128" cy="112" r="64" fill="url(#circleGel)"/>
+        <rect x="72" y="40" width="48" height="88" rx="0" fill="url(#barGel)"/>
+        <g clip-path="url(#circleClip)">
+          <rect x="72" y="40" width="48" height="88" rx="0" fill="#20296B" fill-opacity="0.76"/>
+          <rect x="72" y="40" width="48" height="88" rx="0" fill="url(#overlapShade)"/>
+        </g>
+      </g>
+      <circle cx="128" cy="112" r="62" stroke="white" stroke-opacity="0.2" stroke-width="3"/>
+      <path d="M75 43H117" stroke="white" stroke-opacity="0.18" stroke-width="3" stroke-linecap="round"/>
+    </g>
+
+    <g id="mark-base-flat">
+      <g filter="url(#softShadow)">
+        <circle cx="128" cy="112" r="64" fill="url(#circleFlat)"/>
+        <rect x="72" y="40" width="48" height="88" rx="0" fill="url(#barFlat)"/>
+        <g clip-path="url(#circleClip)">
+          <rect x="72" y="40" width="48" height="88" rx="0" fill="#1D286F" fill-opacity="0.82"/>
+        </g>
+      </g>
+    </g>
+
+    <g id="one-eye-soft">
+      <rect x="100" y="94" width="14" height="34" rx="7" fill="#F7F4FF" filter="url(#eyeGlow)"/>
+      <rect x="103" y="98" width="8" height="13" rx="4" fill="white" fill-opacity="0.72"/>
+    </g>
+
+    <g id="one-eye-gloss">
+      <ellipse cx="107" cy="112" rx="10" ry="20" fill="#171532"/>
+      <ellipse cx="103" cy="101" rx="5" ry="6" fill="white" fill-opacity="0.88"/>
+      <ellipse cx="110" cy="123" rx="5" ry="8" fill="#4A43A8" fill-opacity="0.25"/>
+    </g>
+
+    <g id="one-eye-slot">
+      <rect x="101" y="96" width="12" height="32" rx="6" fill="#FFFFFF" fill-opacity="0.94" filter="url(#eyeGlow)"/>
+    </g>
+
+    <g id="sparkle">
+      <path d="M151 118C158 116 162 112 164 104C166 112 171 116 178 118C171 120 166 125 164 133C162 125 158 120 151 118Z" fill="#FFFFFF" fill-opacity="0.88" filter="url(#eyeGlow)"/>
+    </g>
+  </defs>
+
+  <rect width="1200" height="1200" fill="#FFFDFC"/>
+
+  <g transform="translate(205 190) scale(1.55)">
+    <use href="#mark-base-soft"/>
+    <use href="#one-eye-soft"/>
+  </g>
+
+  <g transform="translate(725 190) scale(1.55)">
+    <use href="#mark-base-gel"/>
+    <use href="#one-eye-gloss"/>
+  </g>
+
+  <g transform="translate(205 705) scale(1.55)">
+    <use href="#mark-base-gel"/>
+    <use href="#one-eye-slot"/>
+  </g>
+
+  <g transform="translate(725 705) scale(1.55)">
+    <use href="#mark-base-soft"/>
+    <use href="#one-eye-soft"/>
+    <use href="#sparkle"/>
+  </g>
+</svg>
