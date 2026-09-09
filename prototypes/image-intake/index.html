@@ -1,0 +1,720 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>웹사이트에서 사용할 이미지 - 프로토타입</title>
+    <style>
+      :root {
+        --bg: #f6f7fb;
+        --panel: #ffffff;
+        --text: #202124;
+        --muted: #6b7280;
+        --soft: #eef1f6;
+        --line: #d8dde8;
+        --line-strong: #b9c0ce;
+        --brand: #6f45ff;
+        --brand-soft: #f1edff;
+        --success: #0f8f62;
+        --success-soft: #e9f8f0;
+        --warn: #7a5a13;
+        --warn-soft: #fff6d8;
+        --shadow: 0 18px 60px rgba(16, 24, 40, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--text);
+        background: var(--bg);
+        font-family:
+          Inter,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        letter-spacing: 0;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      .app {
+        display: grid;
+        grid-template-columns: 280px minmax(0, 1fr);
+        min-height: 100vh;
+      }
+
+      .side {
+        padding: 24px 20px;
+        background: #222630;
+        color: #fff;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 28px;
+        font-weight: 800;
+      }
+
+      .mark {
+        display: grid;
+        width: 28px;
+        height: 28px;
+        place-items: center;
+        border-radius: 7px;
+        background: linear-gradient(135deg, #8dffdd, #8f6bff);
+      }
+
+      .nav {
+        display: grid;
+        gap: 8px;
+      }
+
+      .nav button {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 44px;
+        padding: 0 12px;
+        border: 0;
+        border-radius: 8px;
+        color: rgba(255, 255, 255, 0.78);
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .nav button.is-active {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .main {
+        min-width: 0;
+        padding: 34px 40px 56px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 24px;
+        max-width: 1100px;
+        margin: 0 auto 22px;
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: 24px;
+        line-height: 1.25;
+      }
+
+      .lead {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .mode {
+        display: flex;
+        flex-shrink: 0;
+        gap: 4px;
+        padding: 4px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+
+      .mode button {
+        min-height: 34px;
+        padding: 0 12px;
+        border: 0;
+        border-radius: 6px;
+        color: var(--muted);
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .mode button.is-active {
+        color: var(--text);
+        background: var(--soft);
+        font-weight: 700;
+      }
+
+      .canvas {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 300px;
+        gap: 20px;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      .question {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+        box-shadow: var(--shadow);
+      }
+
+      .question-head {
+        padding: 28px 30px 18px;
+        border-bottom: 1px solid var(--soft);
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        min-height: 24px;
+        margin-bottom: 14px;
+        padding: 0 9px;
+        border-radius: 999px;
+        color: #4f36b7;
+        background: var(--brand-soft);
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      h2 {
+        margin: 0 0 10px;
+        font-size: 22px;
+        line-height: 1.35;
+      }
+
+      .desc {
+        max-width: 720px;
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .body {
+        padding: 24px 30px 28px;
+      }
+
+      .dropzone {
+        display: grid;
+        place-items: center;
+        min-height: 170px;
+        border: 1.5px dashed var(--line-strong);
+        border-radius: 8px;
+        background: #fbfcff;
+        text-align: center;
+      }
+
+      .dropzone strong {
+        display: block;
+        margin-top: 12px;
+        font-size: 18px;
+      }
+
+      .dropzone p {
+        margin: 6px 0 0;
+        color: var(--muted);
+      }
+
+      .add-btn {
+        display: inline-grid;
+        width: 52px;
+        height: 52px;
+        place-items: center;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        color: var(--text);
+        background: #fff;
+        box-shadow: 0 8px 20px rgba(16, 24, 40, 0.08);
+        cursor: pointer;
+      }
+
+      .controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        margin-bottom: 16px;
+      }
+
+      .status {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        padding: 0 10px;
+        border-radius: 999px;
+        color: var(--muted);
+        background: var(--soft);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .pill.good {
+        color: var(--success);
+        background: var(--success-soft);
+      }
+
+      .pill.warn {
+        color: var(--warn);
+        background: var(--warn-soft);
+      }
+
+      .toggle {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .toggle input {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--brand);
+      }
+
+      .thumbs {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+        gap: 14px;
+      }
+
+      .tile {
+        position: relative;
+        min-width: 0;
+      }
+
+      .photo {
+        display: block;
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--soft);
+      }
+
+      .tile.is-unused .photo {
+        opacity: 0.32;
+        filter: saturate(0.35);
+      }
+
+      .badge {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        max-width: calc(100% - 42px);
+        overflow: hidden;
+        padding: 4px 7px;
+        border-radius: 999px;
+        color: #fff;
+        background: rgba(15, 143, 98, 0.94);
+        font-size: 11px;
+        font-weight: 800;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .tile.is-unused .badge {
+        color: #4f5563;
+        background: rgba(255, 255, 255, 0.88);
+      }
+
+      .icon-btn {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        display: grid;
+        width: 28px;
+        height: 28px;
+        place-items: center;
+        border: 0;
+        border-radius: 999px;
+        color: #fff;
+        background: rgba(32, 33, 36, 0.82);
+        cursor: pointer;
+      }
+
+      .tile.is-unused .icon-btn {
+        background: rgba(32, 33, 36, 0.72);
+      }
+
+      .tile small {
+        display: block;
+        overflow: hidden;
+        margin-top: 7px;
+        color: var(--muted);
+        font-size: 12px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        padding: 18px 30px;
+        border-top: 1px solid var(--soft);
+        background: #fbfcff;
+      }
+
+      .secondary,
+      .primary {
+        min-height: 42px;
+        padding: 0 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 800;
+      }
+
+      .secondary {
+        border: 1px solid var(--line);
+        color: var(--text);
+        background: #fff;
+      }
+
+      .primary {
+        border: 1px solid #5530de;
+        color: #fff;
+        background: var(--brand);
+      }
+
+      .insight {
+        align-self: start;
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+
+      .insight h3 {
+        margin: 0 0 14px;
+        font-size: 16px;
+      }
+
+      .insight ul {
+        display: grid;
+        gap: 12px;
+        margin: 0;
+        padding-left: 18px;
+        color: var(--muted);
+        line-height: 1.55;
+        font-size: 14px;
+      }
+
+      .preview {
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid var(--soft);
+      }
+
+      .preview-title {
+        margin: 0 0 10px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .hero-preview {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #101828;
+      }
+
+      .hero-preview img {
+        display: block;
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+      }
+
+      .hero-copy {
+        padding: 12px;
+        color: #fff;
+      }
+
+      .hero-copy strong {
+        display: block;
+        font-size: 14px;
+      }
+
+      .hero-copy span {
+        display: block;
+        margin-top: 5px;
+        color: rgba(255, 255, 255, 0.72);
+        font-size: 12px;
+        line-height: 1.45;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      @media (max-width: 900px) {
+        .app {
+          grid-template-columns: 1fr;
+        }
+
+        .side {
+          display: none;
+        }
+
+        .main {
+          padding: 24px 18px 42px;
+        }
+
+        .topbar,
+        .canvas {
+          grid-template-columns: 1fr;
+        }
+
+        .topbar {
+          display: grid;
+        }
+
+        .mode {
+          width: 100%;
+        }
+
+        .mode button {
+          flex: 1;
+        }
+
+        .question-head,
+        .body,
+        .actions {
+          padding-right: 18px;
+          padding-left: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="side">
+        <div class="brand"><span class="mark">AI</span> 식스샵 프로</div>
+        <nav class="nav" aria-label="진행 단계">
+          <button>목적 <span>완료</span></button>
+          <button>분야 <span>완료</span></button>
+          <button class="is-active">이미지 <span>선택</span></button>
+          <button>추가 요청 <span>선택</span></button>
+        </nav>
+      </aside>
+
+      <main class="main">
+        <div class="topbar">
+          <div>
+            <h1>웹사이트에서 사용할 이미지를 확인해 주세요</h1>
+            <p class="lead">
+              브랜드 로고, 상품, 공간, 콘텐츠 이미지가 있으면 실제 사이트에 더 어울리는
+              시안을 만들 수 있어요. 없어도 다음 단계로 진행할 수 있습니다.
+            </p>
+          </div>
+          <div class="mode" aria-label="프로토타입 상태">
+            <button class="is-active" data-state="empty">업로드 전</button>
+            <button data-state="review">검토</button>
+            <button data-state="simple">간단형</button>
+          </div>
+        </div>
+
+        <div class="canvas">
+          <section class="question">
+            <div class="question-head">
+              <span class="eyebrow">선택 정보</span>
+              <h2>웹사이트에 반영할 이미지를 추가할까요?</h2>
+              <p class="desc" id="description">
+                로고, 대표 상품, 매장이나 공간 사진처럼 그대로 사용하고 싶은 이미지를
+                올려 주세요. AI가 적합한 이미지를 먼저 골라두고, 원하지 않는 이미지는
+                제외할 수 있습니다.
+              </p>
+            </div>
+
+            <div class="body">
+              <div id="emptyState" class="dropzone">
+                <div>
+                  <button class="add-btn" aria-label="이미지 추가">+</button>
+                  <strong>이미지 추가</strong>
+                  <p>이미지가 없으면 AI가 사이트 목적에 맞는 이미지를 생성합니다.</p>
+                </div>
+              </div>
+
+              <div id="reviewState" class="hidden">
+                <div class="controls">
+                  <div class="status">
+                    <span class="pill good" id="usedCount">6개 사용 예정</span>
+                    <span class="pill warn" id="unusedCount">3개 제외됨</span>
+                  </div>
+                  <label class="toggle">
+                    <input id="showUnused" type="checkbox" checked />
+                    제외한 이미지도 보기
+                  </label>
+                </div>
+                <div class="thumbs" id="thumbs"></div>
+              </div>
+
+              <div id="simpleState" class="hidden">
+                <div class="controls">
+                  <div class="status">
+                    <span class="pill good">AI 추천 이미지를 앞에 표시</span>
+                    <span class="pill">순서는 유지</span>
+                  </div>
+                </div>
+                <div class="thumbs" id="simpleThumbs"></div>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="secondary">건너뛰기</button>
+              <button class="primary">다음</button>
+            </div>
+          </section>
+
+          <aside class="insight">
+            <h3>UX 판단 메모</h3>
+            <ul>
+              <li>“사용할 이미지”보다 “반영할 이미지”가 AI 제작 맥락에 더 자연스럽습니다.</li>
+              <li>마이너스는 삭제로 오해될 수 있어 “제외” 상태를 함께 보여주는 편이 안전합니다.</li>
+              <li>이미지가 많을수록 한 줄 스크롤보다 격자가 검토 비용을 낮춥니다.</li>
+              <li>업로드가 선택 사항이라는 점을 액션 근처에서 반복해 이탈 부담을 줄입니다.</li>
+            </ul>
+            <div class="preview">
+              <p class="preview-title">반영 예시</p>
+              <div class="hero-preview">
+                <img
+                  alt=""
+                  src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=600&q=80"
+                />
+                <div class="hero-copy">
+                  <strong>포근한 반려견 케어 브랜드</strong>
+                  <span>선택한 이미지 톤을 기준으로 메인 비주얼과 배너 구성을 제안합니다.</span>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      const images = [
+        {
+          name: "대표 이미지",
+          used: true,
+          src: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=300&q=80",
+        },
+        {
+          name: "상품 착용컷",
+          used: true,
+          src: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=300&q=80",
+        },
+        {
+          name: "브랜드 무드",
+          used: true,
+          src: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=300&q=80",
+        },
+        {
+          name: "상세 이미지",
+          used: false,
+          src: "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=300&q=80",
+        },
+        {
+          name: "보조 컷",
+          used: true,
+          src: "https://images.unsplash.com/photo-1593134257782-e89567b7718a?auto=format&fit=crop&w=300&q=80",
+        },
+        {
+          name: "흐림",
+          used: false,
+          src: "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?auto=format&fit=crop&w=300&q=80",
+        },
+        {
+          name: "콘텐츠 이미지",
+          used: true,
+          src: "https://images.unsplash.com/photo-1504595403659-9088ce801e29?auto=format&fit=crop&w=300&q=80",
+        },
+        {
+          name: "중복 후보",
+          used: false,
+          src: "https://images.unsplash.com/photo-1525253013412-55c1a69a5738?auto=format&fit=crop&w=300&q=80",
+        },
+        {
+          name: "프로필 컷",
+          used: true,
+          src: "https://images.unsplash.com/photo-1561037404-61cd46aa615b?auto=format&fit=crop&w=300&q=80",
+        },
+      ];
+
+      const stateButtons = document.querySelectorAll("[data-state]");
+      const emptyState = document.querySelector("#emptyState");
+      const reviewState = document.querySelector("#reviewState");
+      const simpleState = document.querySelector("#simpleState");
+      const thumbs = document.querySelector("#thumbs");
+      const simpleThumbs = document.querySelector("#simpleThumbs");
+      const showUnused = document.querySelector("#showUnused");
+      const usedCount = document.querySelector("#usedCount");
+      const unusedCount = document.querySelector("#unusedCount");
+
+      function icon(used) {
+        return used ? "−" : "+";
+      }
+
+      function label(used) {
+        return used ? "사용 예정" : "제외됨";
+      }
+
+      function renderTile(item, index, compact = false) {
+        const tile = document.createElement("article");
+        tile.className = `tile ${item.used ? "" : "is-unused"}`;
+        tile.innerHTML = `
+          <img class="photo" alt="${item.name}" src="${item.src}" />
+          ${compact ? "" : `<span class="badge">${label(item.used)}</span>`}
+          <button class="icon-btn" aria-label="${item.name} ${item.used ? "제외" : "사용"}">${icon(item.used)}</button>
+          <small>${item.name}</small>
+        `;
+        tile.querySelector("button").addEventListener("click", () => {
+          images[index].used = !images[index].used;
+          render();
+        });
+        return tile;
+      }
+
+      function render() {
+        const visible = showUnused.checked ? images : images.filter((item) => item.used);
+        thumbs.replaceChildren(...visible.map((item) => renderTile(item, images.indexOf(item))));
+        simpleThumbs.replaceChildren(...images.map((item, index) => renderTile(item, index, true)));
+        const used = images.filter((item) => item.used).length;
+        usedCount.textContent = `${used}개 사용 예정`;
+        unusedCount.textContent = `${images.length - used}개 제외됨`;
+      }
+
+      function setState(state) {
+        stateButtons.forEach((button) => {
+          button.classList.toggle("is-active", button.dataset.state === state);
+        });
+        emptyState.classList.toggle("hidden", state !== "empty");
+        reviewState.classList.toggle("hidden", state !== "review");
+        simpleState.classList.toggle("hidden", state !== "simple");
+      }
+
+      stateButtons.forEach((button) => {
+        button.addEventListener("click", () => setState(button.dataset.state));
+      });
+      showUnused.addEventListener("change", render);
+      render();
+    </script>
+  </body>
+</html>
